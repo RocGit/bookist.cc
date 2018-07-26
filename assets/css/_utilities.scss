@@ -1,0 +1,61 @@
+.clearfix {
+  &::after {
+    display: block;
+    clear: both;
+    content: '';
+  }
+}
+
+.u-flex {
+  display: flex;
+}
+.u-flexWrap {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+}
+.u-flexColumn {
+  display: flex;
+  flex-direction: column;
+}
+
+.u-flex0 {
+  flex: 0 0 auto;
+}
+.u-flex1 {
+  flex: 1 1 auto;
+}
+
+.u-ellipsis {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.u-colorfulText {
+  color: #ad5beb;
+  background: linear-gradient(
+    180deg,
+    #ad5beb 25%,
+    #c678db 50%,
+    #da6ea9 75%,
+    #e76e92 100%
+  );
+  background-clip: text;
+  text-fill-color: transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.u-tag {
+  color: $color-text-normal;
+  font-size: 12px;
+  border-radius: 2px;
+  padding: 3px 8px;
+  margin-right: 5px;
+  margin-bottom: 10px;
+  background-color: #f0e1ed;
+  // &:hover {
+  //   color: $color-text-light;
+  // }
+}
