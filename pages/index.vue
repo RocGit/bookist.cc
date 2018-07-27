@@ -20,6 +20,7 @@ export default {
     title: '书大师 - 优质电子书资源分享',
     titleTemplate: null,
   },
+  watchQuery: ['page'],
   async asyncData({ app, route, redirect }) {
     const size = 12
     let page = route.query.page || 1
