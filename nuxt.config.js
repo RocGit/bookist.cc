@@ -31,7 +31,10 @@ module.exports = {
           '这是一个电子书资源分享与交流的小站，通过社区的力量，把网络能搜集到的免费电子书资源（包含PDF、AZW3、EPUB、MOBI格式）进行共享和管理，方便大家查找和免费下载。快来找找有没有自己喜欢的电子书吧！',
       },
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    link: [
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'stylesheet', href:"https://cdnjs.cloudflare.com/ajax/libs/github-fork-ribbon-css/0.2.2/gh-fork-ribbon.min.css" }
+    ],
   },
 
   // Customize the progress bar color
