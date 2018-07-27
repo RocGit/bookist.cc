@@ -74,6 +74,8 @@
 import QRious from 'qrious'
 import Modal from '~/components/Modal'
 import BookToc from '~/components/BookToc'
+import { bookApi } from '@/api'
+
 export default {
   layout: 'master',
   validate({ params }) {
@@ -87,20 +89,20 @@ export default {
         {
           hid: 'description',
           name: 'description',
-          content: this.headDescription
+          content: this.headDescription,
         },
         {
           hid: 'keywords',
           name: 'keywords',
           content:
             this.book.tags.map(x => x.name).join(', ') +
-            ', pdf, azw3, epub, mobi, 电子书, E-book, 下载, Download'
-        }
-      ]
+            ', pdf, azw3, epub, mobi, 电子书, E-book, 下载, Download',
+        },
+      ],
     }
   },
   async asyncData({ app, params }) {
-    let book = await app.$axios.$get(`books/${params.id}`)
+    let book = await bookApi.getById(params.id)
     return { book }
   },
   data() {
@@ -111,14 +113,16 @@ export default {
         2: 'AZW3',
         3: 'EPUB',
         4: 'MOBI',
-        9: '在线阅读'
-      }
+        9: '在线阅读',
+      },
     }
   },
   computed: {
     shareText() {
-      return `分享一本电子书：《${this.book.title.replace('#', '%23')}》，免费下载：${this
-        .fullUrl}`
+      return `分享一本电子书：《${this.book.title.replace(
+        '#',
+        '%23'
+      )}》，免费下载：${this.fullUrl}`
     },
     fullUrl() {
       return window.location.href
@@ -131,7 +135,7 @@ export default {
     },
     formatStr() {
       return this.book.links.map(x => this.formats[x.format]).join(', ')
-    }
+    },
   },
   methods: {
     openWindow(url) {
@@ -151,8 +155,9 @@ export default {
     },
     shareWeibo() {
       this.openWindow(
-        `http://service.weibo.com/share/share.php?title=${this
-          .shareText}&url=${this.fullUrl}`
+        `http://service.weibo.com/share/share.php?title=${this.shareText}&url=${
+          this.fullUrl
+        }`
       )
     },
     shareWechat() {
@@ -163,12 +168,12 @@ export default {
       if (!this.qr) {
         this.qr = new QRious({
           element: document.getElementById('qrCode'),
-          size: 300
+          size: 300,
         })
       }
       this.qr.value = url
-    }
-  }
+    },
+  },
 }
 </script>
 

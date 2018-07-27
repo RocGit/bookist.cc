@@ -11,12 +11,14 @@
 <script>
 import BookCard from '../components/BookCard'
 import Paginator from '../components/Paginator'
+import { bookApi } from '../api'
+
 export default {
   layout: 'master',
   components: { BookCard, Paginator },
   head: {
     title: '书大师 - 优质电子书资源分享',
-    titleTemplate: null
+    titleTemplate: null,
   },
   async asyncData({ app, route, redirect }) {
     const size = 12
@@ -25,19 +27,21 @@ export default {
       redirect(302, '/search')
       return
     }
-    let data = await app.$axios.$get('/books', {
-      params: { page: route.query.page || 1, size, tag: route.query.tag }
+    let data = await bookApi.get({
+      page: route.query.page || 1,
+      size,
+      tag: route.query.tag,
     })
     return { data, size } //  data = {list, total}
   },
   methods: {
     onPage(page) {
       let query = Object.assign({}, this.$route.query, {
-        page: page > 1 ? page : undefined
+        page: page > 1 ? page : undefined,
       })
       this.$router.push({ path: '/', query: query })
-    }
-  }
+    },
+  },
 }
 </script>
 

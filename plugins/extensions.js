@@ -18,7 +18,7 @@ Vue.filter('month', val => {
 })
 
 Vue.prototype.$imgUrl = (fileId, styleName) => {
-  let url = `${process.env.imageHost}/${fileId}`
+  let url = `${process.env.IMAGE_URL}/${fileId}`
   if (!styleName) return url
   return `${url}-${styleName}`
 }

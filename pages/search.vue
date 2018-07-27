@@ -24,21 +24,25 @@
 <script>
 import BookCard from '../components/BookCard'
 import Paginator from '../components/Paginator'
+import { bookApi } from '@/api'
+
 export default {
   layout: 'master',
   components: { BookCard, Paginator },
   head: {
-    title: '找书'
+    title: '找书',
   },
   async asyncData({ app, query }) {
     const ssrData = {
       size: 12,
       showEmpty: false,
-      data: { list: [], total: 0 }
+      data: { list: [], total: 0 },
     }
     if (query.q) {
-      ssrData.data = await app.$axios.$get('/books', {
-        params: { page: query.page || 1, size: ssrData.size, keyword: query.q }
+      ssrData.data = await bookApi.get({
+        page: query.page || 1,
+        size: ssrData.size,
+        keyword: query.q,
       })
       ssrData.showEmpty = !ssrData.data.list.length
     }
@@ -51,14 +55,14 @@ export default {
     onPage(page) {
       this.$router.push({
         path: '/search',
-        query: { page: page > 1 ? page : undefined, q: this.keyword }
+        query: { page: page > 1 ? page : undefined, q: this.keyword },
       })
     },
     search() {
       if (!this.keyword || !(this.keyword + '').trim()) return
       this.$router.push({ path: '/search', query: { q: this.keyword } })
-    }
-  }
+    },
+  },
 }
 </script>
 

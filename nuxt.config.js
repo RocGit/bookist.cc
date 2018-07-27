@@ -1,6 +1,7 @@
 module.exports = {
   env: {
-    imageHost: 'https://img.bookist.cc'
+    API_URL: 'https://bookist.cc/api',
+    IMAGE_URL: 'https://img.bookist.cc',
   },
   modules: [
     '@nuxtjs/axios',
@@ -8,13 +9,13 @@ module.exports = {
     [
       '@nuxtjs/google-analytics',
       {
-        id: 'UA-81493244-3'
-      }
-    ]
+        id: 'UA-81493244-3',
+      },
+    ],
   ],
   axios: {
     redirectError: {
-      401: '/login'
+      401: '/login',
     },
     init(axios, ctx) {
       axios.$getCache = async (apiPath, params) => {
@@ -26,7 +27,7 @@ module.exports = {
         sessionStorage.setItem(key, JSON.stringify(data))
         return data
       }
-    }
+    },
     // requestInterceptor(cfg, { store }) {
     //   return cfg
     // },
@@ -48,16 +49,17 @@ module.exports = {
       {
         hid: 'keywords',
         name: 'keywords',
-        content: '电子书, 书籍, 下载, E-book, pdf, azw3, epub, mobi, 图书, 免费'
+        content:
+          '电子书, 书籍, 下载, E-book, pdf, azw3, epub, mobi, 图书, 免费',
       },
       {
         hid: 'description',
         name: 'description',
         content:
-          '这是一个电子书资源分享与交流的小站，通过社区的力量，把网络能搜集到的免费电子书资源（包含PDF、AZW3、EPUB、MOBI格式）进行共享和管理，方便大家查找和免费下载。快来找找有没有自己喜欢的电子书吧！'
-      }
+          '这是一个电子书资源分享与交流的小站，通过社区的力量，把网络能搜集到的免费电子书资源（包含PDF、AZW3、EPUB、MOBI格式）进行共享和管理，方便大家查找和免费下载。快来找找有没有自己喜欢的电子书吧！',
+      },
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
 
   // Customize the progress bar color
@@ -72,7 +74,7 @@ module.exports = {
           enforce: 'pre',
           test: /\.(js|vue)$/,
           loader: 'eslint-loader',
-          exclude: /(node_modules)/
+          exclude: /(node_modules)/,
         })
       }
       // Global import for sass
@@ -99,15 +101,15 @@ module.exports = {
         options: {
           // classPrefix: 'svg-',
           // removingTagAttrs: ['fill']
-        }
+        },
       })
     },
-    vendor: ['axios']
+    vendor: ['axios'],
   },
   plugins: [
     '~plugins/extensions',
-    '~plugins/svg-icon'
+    '~plugins/svg-icon',
     // { src: '~plugins/ga.js', ssr: false }
   ],
-  css: [{ lang: 'scss', src: '~assets/css/index.scss' }]
+  css: [{ lang: 'scss', src: '~assets/css/index.scss' }],
 }

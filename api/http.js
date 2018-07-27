@@ -29,16 +29,17 @@ function handleResponseError({ status, data }) {
 }
 
 const http = axios.create({
-  baseURL: '/api',
+  baseURL: process.env.API_URL,
   headers: {
     Accept: 'application/json',
-    'Content-Type': 'application/json'
-  }
+    'Content-Type': 'application/json',
+  },
 })
 
 http.interceptors.request.use(
   config => {
     // TODO: Use JWT
+    console.log(config)
     return config
   },
   error => {

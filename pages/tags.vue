@@ -11,12 +11,14 @@
 </template>
 
 <script>
+import { tagApi } from '../api'
+
 export default {
   head: {
-    title: '所有标签'
+    title: '所有标签',
   },
   async asyncData({ app }) {
-    let tags = await app.$axios.$get('/tags/grouped')
+    let tags = await tagApi.getGroped()
     return { tags }
   }
 }
