@@ -61,7 +61,7 @@ http.interceptors.response.use(
 
 // Client-side only
 http.$getCache = function(apiPath, params) {
-  let key = apiPath + params ? JSON.stringify(params) : ''
+  let key = apiPath + (params ? JSON.stringify(params) : '')
   let cached = sessionStorage.getItem(key)
   if (cached) return Promise.resolve(JSON.parse(cached))
 
