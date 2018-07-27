@@ -1,12 +1,16 @@
 <template>
   <div class="paginator" v-if="total>size">
-    <v-button :disabled="currentPage==1" @click="clickHandler(-1)">&lt; 上一页</v-button>
+    <router-link :to="prevLink">
+      <v-button :disabled="currentPage==1">&lt; 上一页</v-button>
+    </router-link>
     <span class="page">
       <span class="sm">· · · · · · · · · · </span>
       · · · · 第 {{currentPage}} 页 · · · ·
       <span class="sm"> · · · · · · · · · ·</span>
     </span>
-    <v-button :disabled="total<=currentPage*size" @click="clickHandler(1)">下一页 &gt;</v-button>
+    <router-link :to="nextLink">
+      <v-button :disabled="total<=currentPage*size">下一页 &gt;</v-button>
+    </router-link>
   </div>
 </template>
 
@@ -24,10 +28,12 @@ export default {
       currentPage: parseInt(this.page)
     }
   },
-  methods: {
-    clickHandler(seed) {
-      const nextPage = this.currentPage + seed
-      this.$emit('change', nextPage)
+  computed: {
+    prevLink() {
+      return this.currentPage > 2 ? `/page/${this.currentPage - 1}` : '/'
+    },
+    nextLink() {
+      return `/page/${this.currentPage + 1}`
     }
   },
   watch: {

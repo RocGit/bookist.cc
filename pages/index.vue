@@ -4,7 +4,7 @@
     <div class="u-flexWrap">
       <book-card v-for="book in data.list" :key="book.id" :book="book" />
     </div>
-    <paginator :page="$route.query.page || 1" :size="size" :total="data.total" @change="onPage" />
+    <paginator :page="$route.params.page || 1" :size="size" :total="data.total" />
   </div>
 </template>
 
@@ -20,28 +20,15 @@ export default {
     title: '书大师 - 优质电子书资源分享',
     titleTemplate: null,
   },
-  watchQuery: ['page'],
   async asyncData({ app, route, redirect }) {
     const size = 12
-    let page = route.query.page || 1
+    let page = route.params.page || 1
     if (page > 50) {
       redirect(302, '/search')
       return
     }
-    let data = await bookApi.get({
-      page: route.query.page || 1,
-      size,
-      tag: route.query.tag,
-    })
+    let data = await bookApi.get({ page, size, tag: route.query.tag })
     return { data, size } //  data = {list, total}
-  },
-  methods: {
-    onPage(page) {
-      let query = Object.assign({}, this.$route.query, {
-        page: page > 1 ? page : undefined,
-      })
-      this.$router.push({ path: '/', query: query })
-    },
   },
 }
 </script>

@@ -33,7 +33,11 @@ module.exports = {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      { rel: 'stylesheet', href:"https://cdnjs.cloudflare.com/ajax/libs/github-fork-ribbon-css/0.2.2/gh-fork-ribbon.min.css" }
+      {
+        rel: 'stylesheet',
+        href:
+          'https://cdnjs.cloudflare.com/ajax/libs/github-fork-ribbon-css/0.2.2/gh-fork-ribbon.min.css',
+      },
     ],
   },
 
@@ -87,4 +91,16 @@ module.exports = {
     // { src: '~plugins/ga.js', ssr: false }
   ],
   css: [{ lang: 'scss', src: '~assets/css/index.scss' }],
+  router: {
+    scrollBehavior: function(to, from, savedPosition) {
+      return { x: 0, y: 0 }
+    },
+    extendRoutes(routes, resolve) {
+      routes.push({
+        name: 'page',
+        path: '/page/:page',
+        component: resolve(__dirname, 'pages/index.vue'),
+      })
+    },
+  },
 }
