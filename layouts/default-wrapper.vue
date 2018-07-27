@@ -1,6 +1,5 @@
 <template>
   <div>
-    <a class="github-fork-ribbon" href="https://github.com/liamwang/bookist.cc" data-ribbon="Fork me on GitHub" title="Fork me on GitHub">Fork me on GitHub</a>
     <svg-icon name="_defs" size="0" />
     <navbar />
     <slot />

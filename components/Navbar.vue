@@ -1,5 +1,6 @@
 <template>
   <div class="navbar">
+    <a class="github-fork-ribbon" href="https://github.com/liamwang/bookist.cc" data-ribbon="Fork me on GitHub" title="Fork me on GitHub">Fork me on GitHub</a>
     <div class="container">
       <div class="u-flex">
         <a class="nav-trigger" @click="showModal=true">
@@ -99,6 +100,13 @@ export default {
         margin-right: 50px;
       }
     }
+  }
+}
+
+.github-fork-ribbon {
+  display: none;
+  @media (min-width: 1400px) {
+    display: block;
   }
 }
 </style>

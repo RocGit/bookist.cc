@@ -6,7 +6,7 @@
         <a :href="mail" target="_blank">联系站长</a>，站长核实后会第一时间移除，谢谢！
       </div>
       <div class="links">
-        <a :href="mail" target="_blank">意见反馈</a>
+        <a href="https://github.com/liamwang/bookist.cc/issues" target="_blank">意见反馈</a>
         <span>版权所有 &copy; {{ new Date().getFullYear() }} </span>
         <a href="/">BOOKIST.CC</a>
         <a class="icp" href="http://www.miitbeian.gov.cn" target="_blank">沪ICP备15020427号-4</a>
