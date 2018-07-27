@@ -4,8 +4,6 @@ module.exports = {
     IMAGE_URL: 'https://img.bookist.cc',
   },
   modules: [
-    '@nuxtjs/axios',
-    '@nuxtjs/proxy',
     [
       '@nuxtjs/google-analytics',
       {
@@ -13,32 +11,6 @@ module.exports = {
       },
     ],
   ],
-  axios: {
-    redirectError: {
-      401: '/login',
-    },
-    init(axios, ctx) {
-      axios.$getCache = async (apiPath, params) => {
-        let key = apiPath + JSON.stringify(params)
-        let cached = sessionStorage.getItem(key)
-        if (cached) return JSON.parse(cached)
-
-        var data = await axios.$get(apiPath, params)
-        sessionStorage.setItem(key, JSON.stringify(data))
-        return data
-      }
-    },
-    // requestInterceptor(cfg, { store }) {
-    //   return cfg
-    // },
-    // responseInterceptor(res, ctx) {
-    //   return res
-    // }
-    // ,errorHandler(errorReason, { error }) {
-    //   error('Request Error: ' + errorReason)
-    // }
-  },
-  proxy: ['https://bookist.cc'],
   // Headers of the page
   head: {
     title: '优质电子书分享',

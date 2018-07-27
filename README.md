@@ -1,8 +1,8 @@
-# bookist.cc
+# BOOKIST.CC
 
 [书大师](http://bookist.cc) 前端项目
 
-## 开始
+## HOW TO START
 
 ```bash
 # 开发

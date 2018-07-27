@@ -46,19 +46,21 @@
 
 <script>
 import Box from './Box'
+import { dataApi, tagApi } from '../api'
+
 export default {
   components: { Box },
   data() {
     return {
       tags: [],
-      stats: {}
+      stats: {},
     }
   },
   mounted() {
-    this.$axios.$getCache('tags/trending').then(data => {
+    tagApi.getTrending().then(data => {
       this.tags = data
     })
-    this.$axios.$getCache('data/stats').then(data => {
+    dataApi.getStats().then(data => {
       this.stats = data
     })
   }

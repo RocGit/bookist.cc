@@ -39,7 +39,6 @@ const http = axios.create({
 http.interceptors.request.use(
   config => {
     // TODO: Use JWT
-    console.log(config)
     return config
   },
   error => {
@@ -59,5 +58,17 @@ http.interceptors.response.use(
     return Promise.reject(error)
   }
 )
+
+// Client-side only
+http.$getCache = function(apiPath, params) {
+  let key = apiPath + params ? JSON.stringify(params) : ''
+  let cached = sessionStorage.getItem(key)
+  if (cached) return Promise.resolve(JSON.parse(cached))
+
+  return http.get(apiPath, params).then(res => {
+    sessionStorage.setItem(key, JSON.stringify(res.data))
+    return res.data
+  })
+}
 
 export default http
