@@ -24,7 +24,7 @@
 <script>
 import BookCard from '../components/BookCard'
 import Paginator from '../components/Paginator'
-import { bookApi } from '@/api'
+import { bookApi } from '../api'
 
 export default {
   layout: 'master',
@@ -32,6 +32,7 @@ export default {
   head: {
     title: '找书',
   },
+  watchQuery: ['page', 'q'],
   async asyncData({ app, query }) {
     const ssrData = {
       size: 12,

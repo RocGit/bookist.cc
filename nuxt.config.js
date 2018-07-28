@@ -101,6 +101,11 @@ module.exports = {
         path: '/page/:page',
         component: resolve(__dirname, 'pages/index.vue'),
       })
+      routes.push({
+        name: 'tag',
+        path: '/tag/:tag',
+        component: resolve(__dirname, 'pages/index.vue'),
+      })
     },
   },
 }

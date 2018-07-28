@@ -6,7 +6,7 @@
         <router-link to="/tags">查看所有</router-link>
       </h2>
       <div class="tags u-flexWrap">
-        <router-link v-for="tag in tags" :key="tag.id" class="u-tag" :to="{path:'/',query:{tag:tag.name}}">{{tag.name}}</router-link>
+        <router-link v-for="tag in tags" :key="tag.id" class="u-tag" :to="`/tag/${tag.name}`">{{tag.name}}</router-link>
       </div>
     </box>
     <box padding="10px 12px">
