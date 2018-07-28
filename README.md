@@ -2,6 +2,8 @@
 
 This is the front-ent project of [bookist.cc](https://bookist.cc) website.
 
+![bookist.cc](https://user-images.githubusercontent.com/5000396/43352766-356ca50e-925b-11e8-9bb2-6ee1b70e5ae4.jpg)
+
 ## Quick Start
 
 Make sure you've installed Node and Git.
