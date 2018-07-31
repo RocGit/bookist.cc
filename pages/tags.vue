@@ -3,7 +3,7 @@
     <h1>所有标签</h1>
     <div class="tags clearfix">
       <div v-for="tag in tags" :key="tag.id" class="tag-item">
-        <router-link :to="{path:'/',query:{tag:tag.name}}">{{tag.name}}</router-link>
+        <router-link :to="`/tag/${tag.name}`">{{tag.name}}</router-link>
         <span> ({{tag.bookCount}})</span>
       </div>
     </div>
