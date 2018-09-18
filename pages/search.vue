@@ -2,7 +2,7 @@
   <div class="p-search">
     <h1>搜索</h1>
     <div class="search-bar">
-      <input type="search" v-model="keyword" placeholder="你在找什么书？" @keyup.enter="search(1)" />
+      <input type="search" class="u-input" v-model="keyword" placeholder="你在找什么书？" @keyup.enter="search(1)" />
     </div>
     <div v-if="showEmpty" class="search-none">
       <p>🙁 很抱歉，没有找到你要的书！</p>
@@ -89,14 +89,6 @@ export default {
     input {
       display: block;
       width: 100%;
-      font-size: 15px;
-      padding: 6px 12px;
-      border-radius: 3px;
-      border: 2px solid $color-border;
-      transition: all 0.1s;
-      &:focus {
-        border: 2px solid $color-4;
-      }
     }
   }
   .search-result {

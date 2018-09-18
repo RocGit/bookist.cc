@@ -56,6 +56,16 @@
   margin-bottom: 10px;
   background-color: #f0e1ed;
   // &:hover {
-  //   color: $color-text-light;
+  // color: $color-text-light;
   // }
+}
+.u-input {
+  font-size: 15px;
+  padding: 6px 12px;
+  border-radius: 3px;
+  border: 2px solid $color-border;
+  transition: all 0.1s;
+  &:focus {
+    border: 2px solid $color-4;
+  }
 }

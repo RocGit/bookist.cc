@@ -56,12 +56,28 @@
     </section>
     <section>
       <h3>下载</h3>
-      <ul class="links">
-        <li v-for="link in book.links" :key="link.format">
+      <ul v-if="links.length" class="links">
+        <li v-for="link in links" :key="link.format">
           <a :href="link.url" target="_blank">{{formats[link.format]}} {{link.format==9?'':'格式下载'}}</a>
           <a style="margin-left:20px;" @click="showQrModal(link.url)">扫二维码下载</a>
         </li>
       </ul>
+      <div v-else>
+        <div style="margin-bottom:15px;">
+          <p style="margin:0 0 5px">公众号『极客精神』二维码：</p>
+          <img style="width:200px" src="~assets/img/geekgist.png" />
+        </div>
+        <p style="font-size:16px;">你本地的下载密钥已过期，请在公众号『极客精神』发送消息
+          <b style="color:red;">bookist.cc</b> 获得新的下载密钥。密钥有效期为一个月左右，输入后会自动存储在本地，下次无需重复输入。</p>
+        <div class="key-input-form">
+          <div>
+            <input type="text" class="u-input" v-model="key" placeholder="请输入密钥" @keyup.enter="submitKey()" />
+            <v-button type="primary" :disabled="!key" @click="submitKey()">确定</v-button>
+          </div>
+          <div class="clearfix"></div>
+
+        </div>
+      </div>
     </section>
 
     <modal :show.sync="qrModalShow" class="qr-modal">
@@ -72,8 +88,10 @@
 
 <script>
 import QRious from 'qrious'
+import VButton from '~/components/Button'
 import Modal from '~/components/Modal'
 import BookToc from '~/components/BookToc'
+
 import { bookApi } from '@/api'
 
 export default {
@@ -81,7 +99,7 @@ export default {
   validate({ params }) {
     return !!params.id
   },
-  components: { Modal, BookToc },
+  components: { Modal, BookToc, VButton },
   head() {
     return {
       title: `${this.book.title}[${this.formatStr}]下载`,
@@ -115,6 +133,8 @@ export default {
         4: 'MOBI',
         9: '在线阅读',
       },
+      links: [],
+      key: ''
     }
   },
   computed: {
@@ -134,7 +154,7 @@ export default {
       )
     },
     formatStr() {
-      return this.book.links.map(x => this.formats[x.format]).join(', ')
+      return this.links.map(x => this.formats[x.format]).join(', ')
     },
   },
   methods: {
@@ -147,7 +167,7 @@ export default {
         url,
         '',
         'toolbar=no,location=no,directories=no,status=no,menubar=no,' +
-          `width=${w}, height=${h}, top=${top}, left=${left}`
+        `width=${w}, height=${h}, top=${top}, left=${left}`
       )
     },
     shareTwitter() {
@@ -155,9 +175,7 @@ export default {
     },
     shareWeibo() {
       this.openWindow(
-        `http://service.weibo.com/share/share.php?title=${this.shareText}&url=${
-          this.fullUrl
-        }`
+        `http://service.weibo.com/share/share.php?title=${this.shareText}&url=${this.fullUrl}`
       )
     },
     shareWechat() {
@@ -173,7 +191,28 @@ export default {
       }
       this.qr.value = url
     },
+    submitKey() {
+      if (!this.key) return
+      bookApi.getLinks(this.book.id, this.key).then(links => {
+        this.links = links
+        localStorage.setItem('download-key', this.key)
+      })
+    }
   },
+  mounted() {
+    this.key = localStorage.getItem('download-key')
+    if (this.key) {
+      bookApi.checkDownloadKey(this.key).then(valid => {
+        if (valid) {
+          bookApi.getLinks(this.book.id, this.key).then(links => {
+            this.links = links
+          })
+        } else {
+          localStorage.removeItem('download-key')
+        }
+      })
+    }
+  }
 }
 </script>
 
@@ -296,6 +335,15 @@ export default {
   }
   .qr-modal .modal-dialog {
     text-align: center;
+  }
+
+  .key-input-form {
+    min-height: 70px;
+    input,
+    button {
+      float: left;
+      margin-right: 15px;
+    }
   }
 }
 </style>

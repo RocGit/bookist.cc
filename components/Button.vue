@@ -73,6 +73,7 @@ export default {
     color: $color-border-darker;
     border-color: $color-border;
     &:hover {
+      color: $color-border-darker;
       border-color: $color-border;
     }
   }
