@@ -1,20 +1,22 @@
 <template>
   <div class="book-toc">
     <div v-if="contentShort==contentLong" v-html="contentLong"></div>
-    <transition name="fade" mode="out-in">
-      <div v-if="expanded" key="expanded">
-        <div v-html="contentLong"></div>
-        <div class="more-opt" v-if="contentShort!=contentLong">· · ·
-          <a @click="expanded=false"> 收起 </a> · · ·
+    <div v-else>
+      <transition name="fade" mode="out-in">
+        <div v-if="expanded" key="expanded">
+          <div v-html="contentLong"></div>
+          <div class="more-opt" v-if="contentShort!=contentLong">· · ·
+            <a @click="expanded=false"> 收起 </a> · · ·
+          </div>
         </div>
-      </div>
-      <div v-else key="not-expanded">
-        <div v-html="contentShort"></div>
-        <div class="more-opt" v-if="contentShort!=contentLong">· · ·
-          <a @click="expanded=true"> 展开 </a> · · ·
+        <div v-else key="not-expanded">
+          <div v-html="contentShort"></div>
+          <div class="more-opt" v-if="contentShort!=contentLong">· · ·
+            <a @click="expanded=true"> 展开 </a> · · ·
+          </div>
         </div>
-      </div>
-    </transition>
+      </transition>
+    </div>
   </div>
 </template>
 
