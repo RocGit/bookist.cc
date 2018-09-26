@@ -49,6 +49,7 @@ a {
 .bounce-leave-active {
   animation: bounce-out 0.2s;
 }
+
 @keyframes bounce-in {
   0% {
     transform: scale(0);
