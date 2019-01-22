@@ -6,9 +6,9 @@ module.exports = {
   mode: 'universal',
 
   env: {
-    API_URL: isProd ? 'http://bookist.cc/api' : 'http://localhost:3001/api',
-    API_URL_SSR: 'http://bookist.cc/api',
-    IMAGE_URL: 'http://pic.bookist.cc' //'https://img.bookist.cc'
+    API_URL: isProd ? 'https://bookist.cc/api' : 'http://localhost:3001/api',
+    API_URL_SSR: 'https://bookist.cc/api',
+    IMAGE_URL: 'https://img.bookist.cc'
   },
 
   head: {
