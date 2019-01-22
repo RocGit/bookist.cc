@@ -7,7 +7,7 @@ module.exports = {
 
   env: {
     API_URL: isProd ? 'http://bookist.cc/api' : 'http://localhost:3001/api',
-    API_URL_SSR: 'http://localhost:3001/api',
+    API_URL_SSR: 'http://bookist.cc/api',
     IMAGE_URL: 'http://pic.bookist.cc' //'https://img.bookist.cc'
   },
 
