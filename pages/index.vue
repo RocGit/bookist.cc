@@ -1,10 +1,18 @@
 <template>
   <div class="p-home">
-    <h2 class="tag-title" v-if="$route.name == 'tag'">标签：{{$route.params.tag}}</h2>
-    <div class="u-flexWrap">
-      <book-card v-for="book in data.list" :key="book.id" :book="book" />
+    <h2 v-if="data.payload">【{{ data.payload }}】相关的电子书</h2>
+    <div class="columns is-multiline is-mobile">
+      <div v-for="book in data.list" :key="book.id" class="column is-3-desktop is-4-tablet is-6-mobile">
+        <book-card :book="book" />
+      </div>
     </div>
-    <paginator :page="$route.name=='tag'?$route.query.page:$route.params.page" :size="size" :total="data.total" @change="onPage" />
+
+    <div v-if="$route.name=='search' && data.list.length==0">
+      <p>🙁 很抱歉，没有找到你要的书！</p>
+    </div>
+
+    <!-- 分页，只对前50页，超出提示用户使用搜索 -->
+    <paginator :page="query.page" :size="12" :total="data.total" @change="onPage" />
   </div>
 </template>
 
@@ -14,22 +22,19 @@ import Paginator from '../components/Paginator'
 import { bookApi } from '../api'
 
 export default {
-  layout: 'master',
   components: { BookCard, Paginator },
   head: {
     title: '书大师 - 优质电子书资源分享',
-    titleTemplate: null,
+    titleTemplate: null
   },
-  watchQuery: ['page'],
+  watchQuery: true, //['page', 'q'],
   async asyncData({ app, route, redirect }) {
-    const size = 12
-    const query = {size: 12, page: 1, tag: undefined}
+    const query = { page: route.params.page || 1 }
 
-    if (route.name === 'tag') {
+    if (route.name === 'tag' || route.name === 'search') {
       query.page = route.query.page || 1
       query.tag = route.params.tag
-    } else { // route.name === 'page'
-      query.page = route.params.page || 1
+      query.keyword = route.query.q
     }
 
     if (query.page > 50) {
@@ -38,13 +43,13 @@ export default {
     }
 
     let data = await bookApi.get(query)
-    return { data, size } //  data = {list, total}
+    return { data, query } //  data = {list, total}
   },
   methods: {
     onPage(nextPage, prevPage) {
       const page = nextPage === 1 ? undefined : nextPage
       if (this.$route.name === 'tag') {
-        this.$router.push({path: this.$route.path, query: {page}})
+        this.$router.push({ path: this.$route.path, query: { page } })
       } else {
         page ? this.$router.push(`/page/${page}`) : this.$router.push('/')
       }
@@ -55,20 +60,10 @@ export default {
 
 <style lang="scss">
 .p-home {
-  .tag-title {
-    font-size: 16px;
-    font-weight: bold;
-    margin-bottom: 15px;
-  }
-  > .u-flexWrap {
-    align-content: flex-start;
-  }
-  .book-card {
-    width: 100%;
+  > h2 {
+    font-size: 18px;
     margin-bottom: 20px;
-    @include respond(md) {
-      width: calc(50% - 10px);
-    }
+    color: #8c9ba5;
   }
 }
 </style>

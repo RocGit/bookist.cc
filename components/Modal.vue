@@ -1,10 +1,10 @@
 <template>
   <transition name="modal-fade">
-    <div v-show="show" tabindex="-1" class="modal" @keyup.esc="hide" @click="hide">
-      <a class="modal-close" v-if="showClose" @click="hide">
+    <div v-show="show" tabindex="-1" class="c-modal" @keyup.esc="hide" @click="hide">
+      <a v-if="showClose" class="modal-close" @click="hide">
         <svg-icon name="close" size="20px" />
       </a>
-      <div class="modal-dialog modal-dialog--animate" :style="dialogStyle" v-on:click.stop>
+      <div :style="dialogStyle" class="modal-dialog modal-dialog--animate" @click.stop>
         <slot></slot>
       </div>
     </div>
@@ -15,20 +15,11 @@
 export default {
   name: 'Modal',
   props: {
-    show: {
-      type: Boolean,
-      required: true
-    },
-    size: {
-      type: String,
-      default: 'md'
-    },
-    width: String,
-    height: String,
-    showClose: {
-      type: Boolean,
-      default: true
-    }
+    show: { type: Boolean, required: true },
+    size: { type: String, default: 'md' },
+    width: { type: String, required: false },
+    height: { type: String, required: false },
+    showClose: { type: Boolean, default: true }
   },
   computed: {
     dialogStyle() {
@@ -36,11 +27,6 @@ export default {
         width: this.width,
         height: this.height
       }
-    }
-  },
-  methods: {
-    hide(cancel) {
-      this.$emit('update:show', false)
     }
   },
   watch: {
@@ -55,12 +41,17 @@ export default {
         this.$emit('close')
       }
     }
+  },
+  methods: {
+    hide(cancel) {
+      this.$emit('update:show', false)
+    }
   }
 }
 </script>
 
 <style lang="scss">
-.modal {
+.c-modal {
   position: fixed;
   top: 0;
   left: 0;

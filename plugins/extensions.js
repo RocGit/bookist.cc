@@ -14,7 +14,7 @@ Vue.filter('month', val => {
   // var d = padLeft0(date.getDate())
   // var h = padLeft0(date.getHours())
   // var mi = padLeft0(date.getMinutes())
-  return `${date.getFullYear()}-${m}`
+  return `${date.getFullYear()}年${m}月`
 })
 
 Vue.prototype.$imgUrl = (fileId, styleName) => {

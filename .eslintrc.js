@@ -1,20 +1,26 @@
 module.exports = {
   root: true,
-  parser: 'babel-eslint',
   env: {
     browser: true,
-    node: true,
+    node: true
   },
-  extends: 'standard',
+  parserOptions: {
+    parser: 'babel-eslint'
+  },
+  extends: ['plugin:vue/recommended'],
   // required to lint *.vue files
-  plugins: ['html'],
+  plugins: ['vue'],
   // add your custom rules here
   rules: {
-    'comma-dangle': ['error', 'only-multiline'],
-    'space-before-function-paren': [
-      'error',
-      { anonymous: 'ignore', named: 'never' },
-    ],
-  },
-  globals: {},
+    'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    'vue/singleline-html-element-content-newline': 'off',
+    'vue/multiline-html-element-content-newline': 'off',
+    'vue/html-closing-bracket-newline': 'off',
+    'vue/max-attributes-per-line': 'off',
+    'vue/require-default-prop': 'off',
+    'vue/html-indent':'off',
+    'vue/no-v-html': 'off',
+    'vue/html-self-closing': 'off'
+  }
 }

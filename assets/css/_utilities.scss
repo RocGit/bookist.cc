@@ -11,19 +11,15 @@
 }
 .u-flexWrap {
   display: flex;
-  flex-flow: row wrap;
-  justify-content: space-between;
+  flex-wrap: wrap;
 }
 .u-flexColumn {
   display: flex;
   flex-direction: column;
 }
 
-.u-flex0 {
-  flex: 0 0 auto;
-}
-.u-flex1 {
-  flex: 1 1 auto;
+.u-flexGrow1 {
+  flex-grow: 1;
 }
 
 .u-ellipsis {
@@ -47,25 +43,25 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-.u-tag {
-  color: $color-text-normal;
-  font-size: 12px;
-  border-radius: 2px;
-  padding: 3px 8px;
-  margin-right: 5px;
-  margin-bottom: 10px;
-  background-color: #f0e1ed;
-  // &:hover {
-  // color: $color-text-light;
-  // }
-}
-.u-input {
-  font-size: 15px;
-  padding: 6px 12px;
-  border-radius: 3px;
-  border: 2px solid $color-border;
-  transition: all 0.1s;
-  &:focus {
-    border: 2px solid $color-4;
-  }
-}
+// .u-tag {
+// color: $color-text-normal;
+// font-size: 12px;
+// border-radius: 2px;
+// padding: 3px 8px;
+// margin-right: 5px;
+// margin-bottom: 10px;
+// background-color: #f0e1ed;
+// // &:hover {
+// // color: $color-text-light;
+// // }
+// }
+// .u-input {
+// font-size: 15px;
+// padding: 6px 12px;
+// border-radius: 3px;
+// border: 2px solid $color-border;
+// transition: all 0.1s;
+// &:focus {
+// border: 2px solid $color-4;
+// }
+// }

@@ -1,5 +1,17 @@
 import Vue from 'vue'
 import axios from 'axios'
+import { Toast } from 'buefy/dist/components/toast'
+import sessionStore from '@/store/sessionStore'
+
+const isClient = !!process.client
+
+const alert = msg => {
+  if (isClient) {
+    Toast.open({ duration: 5000, message: msg, type: 'is-danger' })
+  } else {
+    throw new Error(msg)
+  }
+}
 
 function handleResponseError({ status, data }) {
   switch (status) {
@@ -29,15 +41,21 @@ function handleResponseError({ status, data }) {
 }
 
 const http = axios.create({
-  baseURL: process.env.API_URL,
+  baseURL: isClient ? process.env.API_URL : process.env.API_URL_SSR,
   headers: {
     Accept: 'application/json',
-    'Content-Type': 'application/json',
-  },
+    'Content-Type': 'application/json'
+  }
 })
 
 http.interceptors.request.use(
   config => {
+    if (isClient) {
+      const token = sessionStore.getToken()
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`
+      }
+    }
     return config
   },
   error => {
@@ -68,6 +86,18 @@ http.$getCache = function(apiPath, params) {
     sessionStorage.setItem(key, JSON.stringify(res.data))
     return res.data
   })
+}
+
+export const factory = {
+  createGet: path => params => http.get(path, { params }).then(res => res.data),
+
+  createPost: path => data => http.post(path, data).then(res => res.data),
+
+  createPut: pathWithoutId => (id, data) =>
+    http.put(`${pathWithoutId}/${id}`, data).then(res => res.data),
+
+  createDelete: pathWithoutId => (id, data) =>
+    http.delete(`${pathWithoutId}/${id}`).then(res => res.data)
 }
 
 export default http

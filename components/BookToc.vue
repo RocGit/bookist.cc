@@ -5,13 +5,13 @@
       <transition name="fade" mode="out-in">
         <div v-if="expanded" key="expanded">
           <div v-html="contentLong"></div>
-          <div class="more-opt" v-if="contentShort!=contentLong">· · ·
+          <div v-if="contentShort!=contentLong" class="more-opt">· · ·
             <a @click="expanded=false"> 收起 </a> · · ·
           </div>
         </div>
         <div v-else key="not-expanded">
           <div v-html="contentShort"></div>
-          <div class="more-opt" v-if="contentShort!=contentLong">· · ·
+          <div v-if="contentShort!=contentLong" class="more-opt">· · ·
             <a @click="expanded=true"> 展开 </a> · · ·
           </div>
         </div>
@@ -22,7 +22,14 @@
 
 <script>
 export default {
-  props: { content: String },
+  props: {
+    content: { type: String, default: '' }
+  },
+  data() {
+    return {
+      expanded: false
+    }
+  },
   computed: {
     contentShort() {
       if (!this.content) return ''
@@ -33,11 +40,6 @@ export default {
     contentLong() {
       if (!this.content) return ''
       return this.content
-    }
-  },
-  data() {
-    return {
-      expanded: false
     }
   }
 }

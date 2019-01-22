@@ -1,38 +1,47 @@
 <template>
-  <default-wrapper>
+  <div class="layout layout-default">
+    <svg-icon name="_defs" size="0" />
+    <!--
+    <a class="github-fork-ribbon" href="https://github.com/liamwang/bookist.cc"
+      data-ribbon="Fork me on GitHub" title="Fork me on GitHub">
+      Fork me on GitHub
+    </a>
+    -->
+    <navbar />
+
     <div class="container">
-      <nuxt/>
+      <div class="columns is-desktop">
+        <div class="column">
+          <nuxt />
+        </div>
+        <sidebar class="column is-2-desktop"></sidebar>
+      </div>
     </div>
-  </default-wrapper>
+
+    <footerbar />
+  </div>
 </template>
 
 <script>
-import Sidebar from '../components/Sidebar'
-import DefaultWrapper from './default-wrapper'
+import Navbar from '~/components/Navbar'
+import Sidebar from '~/components/Sidebar'
+import Footerbar from '~/components/Footerbar'
 export default {
-  layout: 'default',
-  components: { Sidebar, DefaultWrapper }
+  components: { Navbar, Sidebar, Footerbar },
+  mounted() {
+    // console.log('📢 Hi there :)')
+    // console.log('📢 I 👀 see 👀 you 👀')
+    console.log("📢 Hope you're having a great day 😊")
+  }
 }
 </script>
 
 <style lang="scss">
-.master {
-  main {
-    width: 100%;
-  }
-  aside {
-    width: 100%;
-  }
-  @include respond(lg) {
-    main {
-      width: 72%;
-    }
-    aside {
-      width: 25%;
-    }
+.github-fork-ribbon {
+  display: none;
+  @media (min-width: 1400px) {
+    display: block;
   }
 }
 </style>
-
-
 

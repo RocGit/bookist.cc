@@ -1,24 +1,29 @@
+// body {
+//   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu,
+//     'Open Sans', 'Helvetica Neue', 'Microsoft Yahei', sans-serif;
+//   font-size: 14px;
+//   line-height: 1.5;
+//   color: $color-text-normal;
+//   background: $color-bg;
+//   -webkit-font-smoothing: antialiased;
+//   text-rendering: optimizeLegibility;
+// }
+
+// a {
+//   color: $color-2;
+//   transition: all 0.15s ease-out;
+//   &:hover {
+//     color: $color-3;
+//   }
+// }
+
+html,
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu,
-    'Open Sans', 'Helvetica Neue', 'Microsoft Yahei', sans-serif;
-  font-size: 14px;
-  line-height: 1.5;
-  color: $color-text-normal;
+  min-height: 100vh;
+}
+
+body {
   background: $color-bg;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-}
-
-body {
-  background-color: $color-bg;
-}
-
-a {
-  color: $color-2;
-  transition: all 0.15s ease-out;
-  &:hover {
-    color: $color-3;
-  }
 }
 
 .nuxt-link-exact-active {

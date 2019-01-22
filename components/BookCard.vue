@@ -1,20 +1,18 @@
 <template>
-  <box class="book-card u-flex" @click.native="$router.push('/book/'+book.id)">
-    <img :alt="book.title + ' 封面'" :src="$imgUrl(book.coverId,'w120')" class="cover u-flex0" />
-    <div class="meta u-flex1">
-      <h2>
-        <router-link :to="'/book/'+book.id">{{book.title}}</router-link>
-      </h2>
-      <h3 class="u-ellipsis">作者：{{book.author}}</h3>
-      <p class="intro">{{book.intro}}</p>
+  <router-link :to="'/book/'+book.id" class="book-card">
+    <img :alt="book.title + ' 封面'" :src="$imgUrl(book.cover,'w120')" class="book-card__cover" />
+    <h3 class="u-ellipsis">{{ book.title }}</h3>
+    <p class="book-card__author u-ellipsis">{{ book.author }}</p>
+    <div class="book-card__tags u-ellipsis">
+      <span v-for="tag in book.tags" :key="tag.id" class="tag">
+        {{ tag.name }}
+      </span>
     </div>
-  </box>
+  </router-link>
 </template>
 
 <script>
-import Box from './Box'
 export default {
-  components: { Box },
   props: {
     book: {
       type: Object,
@@ -26,38 +24,37 @@ export default {
 
 <style lang="scss">
 .book-card {
-  height: 160px;
-  cursor: pointer;
+  display: block;
+  height: 280px;
+  padding: 0 12px 10px;
+  text-align: center;
+  background: #fff;
+  transition: all 0.2s linear;
+  overflow: hidden;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
   &:hover {
-    box-shadow: inset 0 0 30px rgba($color-border, 0.9);
-    transition: all 0.15s ease;
-    .cover {
-      opacity: 0.9;
-    }
-    a {
-      color: $color-3;
-    }
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    transform: translate3d(0, -2px, 0);
   }
-  .cover {
-    height: 100%;
-    max-width: 120px;
-  }
-  .meta {
-    height: calc(100% - 10px);
-    overflow: hidden;
-    padding: 10px 12px;
-  }
-  h2 {
-    font-size: 16px;
-    line-height: 1.2;
-    font-weight: 700;
+  img {
+    width: auto;
+    height: 150px;
   }
   h3 {
-    margin-top: 5px;
+    font-size: 17px;
+    margin: 10px 0 5px;
   }
-  .intro {
-    margin-top: 5px;
-    font-size: 13px;
+  &__author {
+    font-size: 14px;
+    color: #777;
+  }
+  &__tags {
+    flex-wrap: nowrap;
+    justify-content: center;
+    margin-top: 12px;
+    .tag ~ .tag {
+      margin-left: 10px;
+    }
   }
 }
 </style>

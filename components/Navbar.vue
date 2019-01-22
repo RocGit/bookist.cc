@@ -1,51 +1,54 @@
 <template>
-  <div class="navbar">
-    <a class="github-fork-ribbon" href="https://github.com/liamwang/bookist.cc" data-ribbon="Fork me on GitHub" title="Fork me on GitHub">Fork me on GitHub</a>
+  <nav class="navbar">
     <div class="container">
-      <div class="u-flex">
-        <a class="nav-trigger" @click="showModal=true">
-          <svg-icon name="menu" size="20px" :colorful="true" />
+      <div class="navbar-brand">
+        <a class="navbar-item" href="http://bookist.cc">
+          <!-- <img src="" width="112" height="28"> -->
+          <strong class="u-colorfulText">书大师 BOOKIST.CC</strong>
         </a>
-        <div class="navs">
-          <a class="logo u-colorfulText" href="/" title="bookist.cc">
-            书大师
-          </a>
-          <router-link to="/">首页</router-link>
-          <router-link to="/tags">所有标签</router-link>
-          <router-link to="/qq-group">加入QQ群</router-link>
+        <a role="button" class="navbar-burger burger" @click="isMenuActive = !isMenuActive">
+          <span></span>
+          <span></span>
+          <span></span>
+        </a>
+      </div>
+
+      <div :class="{'navbar-menu':true, 'is-active':isMenuActive}" @click="isMenuActive=false">
+        <div class="navbar-start">
+          <router-link to="/" exact class="navbar-item">首页</router-link>
+          <!-- <a class="navbar-item">标签</a> -->
+          <router-link to="/qq-group" class="navbar-item">QQ群</router-link>
+          <a class="navbar-item" href="https://github.com/liamwang/bookist.cc" target="_blank">GitHub</a>
         </div>
-        <router-link to="/search">
-          <svg-icon name="search" size="20px" :colorful="true" />
-        </router-link>
+
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <div class="search-wrapper">
+              <input v-model="keyword" type="search" placeholder="你要找什么书？" @click.stop="()=>{}" @keyup.enter="search" />
+              <svg-icon name="search" size="30px" @click.stop="search" />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    <modal :show.sync="showModal" class="navs-modal" :showClose="false">
-      <div class="navs-m">
-        <a @click="showModal=false">
-          <svg-icon name="close" size="20px" />
-        </a>
-        <a @click="navigate('/')">首页</a>
-        <a @click="navigate('/tags')">所有标签</a>
-        <a @click="navigate('/qq-group')">加入QQ群</a>
-        <a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=SSUgKCRnPignLgk4OGcqJiQ" target="_blank">联系站长</a>
-      </div>
-    </modal>
-  </div>
+  </nav>
 </template>
 
 <script>
-import Modal from '~/components/Modal'
 export default {
-  components: { Modal },
   data() {
     return {
-      showModal: false
+      keyword: '',
+      isMenuActive: false
     }
   },
   methods: {
-    navigate(to) {
-      this.showModal = false
-      this.$router.push(to)
+    search() {
+      if (this.keyword && this.keyword.trim().length > 0) {
+        this.isMenuActive = false
+        this.$router.push({ path: '/search', query: { q: this.keyword } })
+        this.keyword = ''
+      }
     }
   }
 }
@@ -53,60 +56,55 @@ export default {
 
 <style lang="scss">
 .navbar {
-  padding: 10px 0;
-  line-height: 30px;
-  // background-color: #fff;
-  border-bottom: 2px solid $color-border;
-  margin-bottom: 20px;
-  .icon {
-    padding-top: 3px;
-  }
-  .u-flex {
-    justify-content: space-between;
-  }
-  .logo {
-    display: block;
-    font-size: 16px;
-    font-weight: 700;
-  }
-  .navs a {
-    display: none;
-    &.logo {
-      display: inline-block;
-    }
-  }
-  .navs-m {
-    display: flex;
-    flex-flow: column wrap;
-    text-align: center;
-    a {
-      display: inline-block;
-      padding: 0 10px;
-      margin-bottom: 6px;
-      font-size: 16px;
-    }
-  }
-  .nuxt-link-exact-active {
-    color: $color-1;
-  }
-  @include respond(md) {
-    .nav-trigger {
-      display: none;
-    }
-    .navs a {
-      display: inline-block;
-      margin-right: 30px;
-      &.logo {
-        margin-right: 50px;
-      }
-    }
+  margin-bottom: 25px;
+  .navbar-item.is-active {
+    color: #7957d5 !important;
   }
 }
-
-.github-fork-ribbon {
-  display: none;
-  @media (min-width: 1400px) {
-    display: block;
+.search-wrapper {
+  position: relative;
+  height: 30px;
+  input[type='search'] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 3;
+    border: none;
+    outline: none;
+    background: none;
+    width: 0;
+    height: 30px;
+    line-height: 28px;
+    padding: 2px;
+    padding-right: 32px;
+    cursor: pointer;
+    font-size: 100%;
+    transition: all 0.5s;
+    border-bottom: 1px solid transparent;
+    &:focus {
+      z-index: 1;
+      border-bottom-color: #c678db;
+      width: 320px;
+      cursor: text;
+    }
+  }
+  .icon-search {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 2;
+    padding: 5px;
+  }
+}
+.navbar-menu.is-active .search-wrapper {
+  input[type='search'] {
+    padding-left: 35px;
+    width: 100%;
+    border-bottom-color: #c678db;
+  }
+  input[type='search'],
+  .icon-search {
+    left: 0;
   }
 }
 </style>

@@ -1,22 +1,9 @@
 <template>
   <aside class="sidebar">
-    <box padding="10px 12px">
-      <h2>
-        热门标签
-        <router-link to="/tags">查看所有</router-link>
-      </h2>
-      <div class="tags u-flexWrap">
-        <router-link v-for="tag in tags" :key="tag.id" class="u-tag" :to="`/tag/${tag.name}`">{{tag.name}}</router-link>
-      </div>
-    </box>
-    <box padding="10px 12px">
-      <h2 class="u-colorfulText">
-        捐赠本站
-      </h2>
+    <section>
+      <h2 class="u-colorfulText">捐助本站</h2>
       <div class="donate">
-        <p>
-          如果您觉得本站的资源对您有些许帮助 😊 那就小小奖励下站长吧 🎁 您的捐赠会让站长更有动力持续更新资源 💪
-        </p>
+        <p>持续更新电子书需要耗费大量时间和精力，如果本站对你有些许帮助，那就捐几块鼓励一下站长吧。</p>
         <div class="u-flexWrap qr-codes">
           <div class="qrcode">
             <h3 style="color:#22A93B">微信扫一扫捐赠</h3>
@@ -27,40 +14,28 @@
             <img src="~assets/img/alipay.jpg" />
           </div>
         </div>
-        <p>
-          <span>注：扫码捐赠时请在</span>
-          <b>备注</b>
-          <span>中填写您的</span>
-          <b>联系邮箱或QQ</b>
-          <span>，以便站长记录并表达感谢。当然，您也可以匿名捐赠。</span>
-        </p>
+        <p style="text-align:center;margin-bottom:4px;">今日若有捐助，明日必有更新 😊</p>
       </div>
-    </box>
-    <box padding="10px 12px" class="stats">
+    </section>
+    <section class="stats">
       <h2>统计数据</h2>
-      <p>书籍总数：{{stats.totalBooks}}</p>
-      <p>今日上传：{{stats.todayBooks}}</p>
-    </box>
+      <p>今日上传：{{ stats.todayBooks }}</p>
+      <p>书籍总数：{{ stats.totalBooks }}</p>
+    </section>
   </aside>
 </template>
 
 <script>
-import Box from './Box'
-import { dataApi, tagApi } from '../api'
+import { bookApi } from '@/api'
 
 export default {
-  components: { Box },
   data() {
     return {
-      tags: [],
-      stats: {},
+      stats: {}
     }
   },
   mounted() {
-    tagApi.getTrending().then(data => {
-      this.tags = data
-    })
-    dataApi.getStats().then(data => {
+    bookApi.getStats().then(data => {
       this.stats = data
     })
   }
@@ -69,13 +44,17 @@ export default {
 
 <style lang="scss">
 .sidebar {
-  .box {
-    margin-bottom: 15px;
+  min-width: 300px;
+  > section {
+    padding: 10px 15px;
+    margin-bottom: 25px;
+    background: #fafafa;
     h2 {
-      font-size: 16px;
+      font-weight: bold;
+      font-size: 17px;
       padding-bottom: 5px;
       margin-bottom: 10px;
-      border-bottom: 1px solid $color-border;
+      border-bottom: 1px solid #ddd;
       a {
         float: right;
         font-weight: normal;
@@ -83,18 +62,11 @@ export default {
         line-height: 1.8;
       }
     }
-    .tags {
-      margin-right: -5px;
-      height: 135px;
-      overflow: hidden;
-      align-items: flex-start;
-    }
 
     .donate {
       position: relative;
       > p {
-        padding-bottom: 10px;
-        margin-top: 10px;
+        margin: 10px 0;
         text-align: justify;
         b {
           font-weight: normal;
@@ -103,8 +75,8 @@ export default {
       }
 
       .qr-codes {
-        border-bottom: 1px solid $color-border;
-        border-top: 1px solid $color-border;
+        border-bottom: 1px solid #eee;
+        border-top: 1px solid #eee;
         padding-bottom: 15px;
         h3 {
           margin-top: 10px;
@@ -116,12 +88,12 @@ export default {
         > div {
           text-align: center;
           width: 100%;
-          @include respond(sm) {
+          /* @include respond(sm) {
             width: 49%;
           }
           @include respond(lg) {
             width: 100%;
-          }
+          } */
         }
       }
     }

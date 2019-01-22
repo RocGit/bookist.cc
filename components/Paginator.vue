@@ -1,25 +1,24 @@
 <template>
-  <div class="paginator" v-if="total>size">
-    <v-button :disabled="currentPage==1" @click="handClick(currentPage-1)">&lt; 上一页</v-button>
-    <span class="page">
-      <span class="sm">· · · · · · · · · · </span>
-      · · · · 第 {{currentPage}} 页 · · · ·
-      <span class="sm"> · · · · · · · · · ·</span>
-    </span>
-    <v-button :disabled="total<=currentPage*size" @click="handClick(currentPage+1)">下一页 &gt;</v-button>
+  <div v-if="total>size" class="paginator">
+    <button v-if="currentPage!=1" class="button is-white" @click="handClick(currentPage-1)">
+      &lt; 上一页
+    </button>
+    <span class="page">· 第 {{ currentPage }} 页 ·</span>
+    <button v-if="total>currentPage*size" class="button is-white" @click="handClick(currentPage+1)">
+      下一页 &gt;
+    </button>
+    <span v-else class="button is-light" disabled style="padding-right:1px">50页以外请使用搜索</span>
   </div>
 </template>
 
 <script>
-import VButton from './Button'
 export default {
-  components: { VButton },
   props: {
     total: { type: Number, default: 0 },
     page: { type: [Number, String], default: 1 },
     size: { type: Number, required: true },
     // where page value from. "query" or "params"
-    where: {type: String, default: 'query'}
+    where: { type: String, default: 'query' }
   },
   data() {
     return {
@@ -31,8 +30,11 @@ export default {
       if (this.where === 'params') {
         return this.currentPage > 2 ? `/page/${this.currentPage - 1}` : '/'
       } else {
-        const page = this.currentPage > 2 ? (this.currentPage - 1) : undefined
-        return { path: this.$route.path, query: Object.assign(this.$route.query, {page: page}) }
+        const page = this.currentPage > 2 ? this.currentPage - 1 : undefined
+        return {
+          path: this.$route.path,
+          query: Object.assign(this.$route.query, { page: page })
+        }
       }
     },
     nextLink() {
@@ -40,19 +42,22 @@ export default {
       if (this.where === 'params') {
         return `/page/${nextPage}`
       } else {
-        return {path: this.$route.path, query: Object.assign(this.$route.query, {page: nextPage})}
+        return {
+          path: this.$route.path,
+          query: Object.assign(this.$route.query, { page: nextPage })
+        }
       }
     }
-  },
-  methods: {
-    handClick(page) {
-      this.$emit('change', page, this.currentPage)
-    },
   },
   watch: {
     page(val) {
       if (parseInt(val) === this.currentPage) return
       this.currentPage = val
+    }
+  },
+  methods: {
+    handClick(page) {
+      this.$emit('change', page, this.currentPage)
     }
   }
 }
