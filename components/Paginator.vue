@@ -7,7 +7,7 @@
     <button v-if="total>currentPage*size" class="button is-white" @click="handClick(currentPage+1)">
       下一页 &gt;
     </button>
-    <span v-else class="button is-light" disabled style="padding-right:1px">50页以外请使用搜索</span>
+    <span v-else-if="currentPage==50" class="button is-light" disabled style="padding-right:1px">50页以外请使用搜索</span>
   </div>
 </template>
 

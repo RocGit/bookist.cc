@@ -1,7 +1,7 @@
 <template>
   <router-link :to="'/book/'+book.id" class="book-card">
-    <img :alt="book.title + ' 封面'" :src="$imgUrl(book.cover,'w120')" class="book-card__cover" />
-    <h3 class="u-ellipsis">{{ book.title }}</h3>
+    <img :alt="book.title + ' 封面'" :src="$imgUrl(book.cover,'h160')" class="book-card__cover" />
+    <h3 class="u-ellipsis" :title="book.title">{{ book.title }}</h3>
     <p class="book-card__author u-ellipsis">{{ book.author }}</p>
     <div class="book-card__tags u-ellipsis">
       <span v-for="tag in book.tags" :key="tag.id" class="tag">

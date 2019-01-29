@@ -26,6 +26,10 @@ body {
   background: $color-bg;
 }
 
+.container {
+  max-width: 1150px !important;
+}
+
 .nuxt-link-exact-active {
   cursor: default !important;
 }

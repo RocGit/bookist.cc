@@ -3,7 +3,7 @@
     <h1>所有标签</h1>
     <div class="tags clearfix">
       <div v-for="tag in tags" :key="tag.id" class="tag-item">
-        <router-link :to="`/tag/${tag.name}`">{{ tag.name }}</router-link>
+        <router-link :to="`/tag/${tag.id}`">{{ tag.name }}</router-link>
         <span> ({{ tag.bookCount }})</span>
       </div>
     </div>
@@ -11,14 +11,14 @@
 </template>
 
 <script>
-import { tagApi } from '../api'
+import { tagApi } from '@/api'
 
 export default {
   head: {
     title: '所有标签'
   },
   async asyncData({ app }) {
-    let tags = await tagApi.getGroped()
+    let tags = await tagApi.getAll()
     return { tags }
   }
 }
@@ -26,7 +26,9 @@ export default {
 
 <style lang="scss">
 .p-tags {
-  min-height: calc(100vh - 240px);
+  background: #fff;
+  padding: 15px 15px 20px 25px;
+  /* min-height: calc(100vh - 240px); */
   h1 {
     font-size: 16px;
     font-weight: bold;

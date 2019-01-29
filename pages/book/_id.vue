@@ -3,11 +3,11 @@
     <section class="book-info">
       <div class="columns">
         <div class="book-info__cover column is-2-tablet">
-          <img :alt="book.title + ' 封面'" :src="$imgUrl(book.cover,'w180')" />
+          <img :alt="book.title + ' 封面'" :src="$imgUrl(book.cover,'w2h3')" />
         </div>
         <div class="book-info__body column">
-          <h1>{{ book.title }}</h1>
-          <h2 v-if="book.subtitle">{{ book.subtitle }}</h2>
+          <h1 class="title">{{ book.title }}</h1>
+          <h2 v-if="book.subtitle" class="subtitle">{{ book.subtitle }}</h2>
           <dl>
             <dt>作 者：</dt>
             <dd>{{ book.author }}</dd>
@@ -39,12 +39,12 @@
 
     <section v-if="book.intro">
       <h3>简介</h3>
-      <div v-html="book.intro"></div>
+      <div class="content" v-html="book.intro"></div>
     </section>
 
     <section v-if="book.toc">
       <h3>目录</h3>
-      <book-toc :content="book.toc"></book-toc>
+      <book-toc :content="book.toc" class="content"></book-toc>
     </section>
 
     <section>
@@ -64,8 +64,8 @@
         </div>
         <div class="column content">
           <h4>请在公众号『极客精神』发送消息 <b style="color:red;">bookist.cc</b> 获取提取码</h4>
-          <p class="is-small">此提取码有效期为一个月左右，输入后会自动存储在本地，下次无需重复输入。</p>
-          <div class="field has-addons has-addons-centered">
+          <p class="is-small">消息“bookist.cc”不区分大小写。提取码有效期为一个月左右，输入后会自动存储在本地，下次无需重复输入。</p>
+          <div class="field has-addons">
             <div class="control">
               <input v-model="code" class="input is-medium" placeholder="请输入提取码" @keyup.enter="submitCode" />
             </div>
@@ -91,7 +91,7 @@ export default {
   components: { BookToc },
   head() {
     return {
-      title: `${this.book.title}[${this.formatStr}]下载`,
+      title: `${this.book.title}${this.formatStr}下载`,
       meta: [
         {
           hid: 'description',
@@ -139,12 +139,13 @@ export default {
     },
     headDescription() {
       return (
-        `电子书《${this.book.title}》${this.formatStr}等格式免费下载。` +
+        `电子书《${this.book.title}》${this.formatStr}格式免费下载。` +
         (this.book.subtitle || '')
       )
     },
     formatStr() {
-      return this.links.map(x => this.formats[x.format]).join(', ')
+      if (this.links.length === 0) return ''
+      return `[${this.links.map(x => this.formats[x.format]).join(', ')}]`
     }
   },
   mounted() {
@@ -202,20 +203,23 @@ export default {
     }
   }
 
+  .content {
+    color: rgba(0, 0, 0, 0.66);
+    font-size: 15px;
+    line-height: 1.8;
+    text-align: justify;
+  }
+
   .book-info {
     &__cover {
-      min-width: 180px;
+      min-width: 200px;
       text-align: center;
     }
     &__body {
       min-width: 300px;
-      > h1 {
-        font-size: 25px;
-        font-weight: bold;
-      }
-      > h2 {
-        font-size: 17px;
-        margin-bottom: 1rem;
+      .subtitle {
+        margin-bottom: 15px;
+        color: rgba(0, 0, 0, 0.55);
       }
       dt,
       dd {
@@ -227,7 +231,7 @@ export default {
         font-weight: bold;
       }
       .tags {
-        margin-top: 8px;
+        margin-top: 12px;
       }
     }
     &__share {
@@ -257,8 +261,7 @@ export default {
       }
     }
     .content {
-      text-align: center;
-      padding: 20px 0;
+      padding: 20px;
       h4 {
         font-size: 18px;
       }
@@ -279,9 +282,6 @@ export default {
         border-bottom: 1px dashed #ccc;
       }
     }
-  }
-  .qr-modal .modal-dialog {
-    text-align: center;
   }
 }
 </style>

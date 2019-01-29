@@ -11,7 +11,7 @@ export default {
     formData.append('file', file)
     formData.append('token', token)
     return axios
-      .post('http://upload.qiniu.com/', formData)
+      .post('https://upload.qiniu.com/', formData)
       .then(res => res.data)
   }
 

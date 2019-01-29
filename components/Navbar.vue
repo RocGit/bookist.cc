@@ -16,7 +16,7 @@
       <div :class="{'navbar-menu':true, 'is-active':isMenuActive}" @click="isMenuActive=false">
         <div class="navbar-start">
           <router-link to="/" exact class="navbar-item">首页</router-link>
-          <!-- <a class="navbar-item">标签</a> -->
+          <router-link to="/tags" class="navbar-item">标签</router-link>
           <router-link to="/qq-group" class="navbar-item">QQ群</router-link>
           <a class="navbar-item" href="https://github.com/liamwang/bookist.cc" target="_blank">GitHub</a>
         </div>

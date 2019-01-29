@@ -8,6 +8,7 @@ function padLeft0(num) {
 }
 
 Vue.filter('month', val => {
+  console.log('month', val)
   if (!val) return ''
   var date = new Date(val)
   var m = padLeft0(date.getMonth() + 1)

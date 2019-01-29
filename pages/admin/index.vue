@@ -18,17 +18,22 @@
     <div class="columns is-multiline">
       <div v-for="(book,index) in books" :key="book.id" class="column is-3">
         <div class="book">
-          <img class="book__cover" :src="$imgUrl(book.cover,'w120')" />
-          <div class="book__title">
-            <a :href="`/book/${book.id}`" target="_blank">{{ book.title }}</a>
+          <img class="book__cover" :src="$imgUrl(book.cover,'h160')" />
+          <div v-show="book.status==0" class="book__status">未发布</div>
+          <div class="book__title u-ellipsis" :titile="book.title">
+            {{ book.title }}
           </div>
           <div class="book__buttons">
-            <router-link :to="{path:'/admin/book-edit',query:{id:book.id}}" class="button is-small is-primary">编辑</router-link>
             <a class="button is-small is-danger" @click="onDelete(book, index)">删除</a>
+            <router-link :to="{path:'/admin/book-edit',query:{id:book.id}}" class="button is-small is-primary">编辑</router-link>
+            <a :href="`/book/${book.id}`" class="button is-small" target="_blank">查看</a>
           </div>
         </div>
       </div>
     </div>
+
+    <b-pagination :total="page.total" :current.sync="page.page" :per-page="page.size" @change="queryData">
+    </b-pagination>
   </div>
 </template>
 
@@ -95,19 +100,32 @@ export default {
       width: auto;
       height: 180px;
     }
+    &__status {
+      position: absolute;
+      width: 80px;
+      top: 0;
+      left: calc(50% - 40px);
+      background: hsl(348, 100%, 61%);
+      color: #fff;
+      font-weight: bold;
+
+      text-align: center;
+    }
     &__buttons {
-      display: none;
+      display: flex;
       align-items: center;
       justify-content: space-around;
       text-align: center;
       position: absolute;
-      top: 0;
-      height: 60px;
+      bottom: 0;
+      height: 50px;
       width: 100%;
-      background: rgba(0, 0, 0, 0.1);
+      background: rgba(0, 0, 0, 0.5);
+      opacity: 0;
+      transition: opacity 0.3s;
     }
     &:hover .book__buttons {
-      display: flex;
+      opacity: 1;
     }
   }
 }
